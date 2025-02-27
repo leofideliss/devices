@@ -1,14 +1,19 @@
 package domain
 
-import (
-	"time"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-)
+import "time"
 
 type Device struct{
-    Id primitive.ObjectID `json:"id"`
+    Id string `json:"id" bson:"_id"`
     Owner string `json:"owner"`
     Title string `json:"title"`
-    Metadata map[string]string `json:"metadata"`
-    Expires_At time.Time `json:"expire_at"`
+    Metadata map[string]any `json:"metadata"`
+    Expires_at time.Time `json:"expire_at"`
+}
+
+type RequestDevice struct{
+    DeviceId string `json:"deviceId"`
+    Owner string `json:"owner"`
+    Title string `json:"title"`
+    Metadata map[string]any `json:"metadata"`
+    Expires_at time.Time `json:"expire_at"`
 }

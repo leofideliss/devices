@@ -7,11 +7,10 @@ import (
 	"github.com/leofideliss/devices/service"
 )
 
-// Função para registrar rotas de dispositivos
 func RegisterDeviceRoutes(router *gin.Engine) {
     deviceService := service.NewDeviceService(repository.DB) 
     deviceHandler := handler.NewDeviceHandler(deviceService)
     
     router.GET("/:id", deviceHandler.GetDevice)
-
+    router.POST("/register", deviceHandler.RegisterDevice)
 }
