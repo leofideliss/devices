@@ -13,4 +13,8 @@ func RegisterDeviceRoutes(router *gin.Engine) {
     
     router.GET("/:id", deviceHandler.GetDevice)
     router.POST("/register", deviceHandler.RegisterDevice)
+    router.DELETE("/:id", deviceHandler.DeleteDevice)
+    router.PATCH("/:id", deviceHandler.UpdateDevice)
+    router.GET("/list", deviceHandler.ListDevice)
+
 }

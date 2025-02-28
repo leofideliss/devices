@@ -25,3 +25,15 @@ func (d *DeviceService) GetDevice (ctx context.Context , id string ) (*domain.De
 func (d *DeviceService) RegisterDevice (ctx context.Context , device *domain.Device) (*mongo.InsertOneResult , error){
     return d.repo.Insert(ctx,device)
 }
+
+func (d *DeviceService) DeleteDevice (ctx context.Context , id string) (*mongo.DeleteResult , error) {
+    return d.repo.Delete(ctx,id)
+}
+
+func (d *DeviceService) UpdateDevice (ctx context.Context , device *domain.Device,id string) (*mongo.UpdateResult , error){
+    return d.repo.Update(ctx,device,id)
+}
+
+func (d *DeviceService) ListDevice (ctx context.Context , owner string , limit , page int) ([]domain.Device , error){
+    return d.repo.FindAll(ctx,owner,limit,page)
+}
