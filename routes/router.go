@@ -5,8 +5,8 @@ import (
 )
 
 func SetupRouter() *gin.Engine {
+    gin.SetMode(gin.DebugMode) 
     router := gin.Default()
-    
 	RegisterDeviceRoutes(router)  
 
     return router

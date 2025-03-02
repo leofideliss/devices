@@ -5,8 +5,6 @@ import (
 )
 
 func main() {
-    
     router:=routes.SetupRouter()
-
-    router.Run()
+    router.Run(":8888")
 }

@@ -14,7 +14,11 @@ import (
 var DB *mongo.Database
 
 func init(){
-	err := godotenv.Load()
+    if os.Getenv("TEST_ENV") == "true" {
+        return
+    }
+    
+    err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Erro ao carregar .env")
 	}
