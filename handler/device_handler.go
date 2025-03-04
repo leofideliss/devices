@@ -39,7 +39,7 @@ func (d *DeviceHandler) RegisterDevice (c *gin.Context){
     var request domain.RequestDevice
 
     if err := c.BindJSON(&request); err != nil{
-        helper.HandleResponseJson(c,nil,"Error Json",421,false)
+        helper.HandleResponseJson(c,nil,err.Error(),http.StatusInternalServerError,false)
         return
     }
 

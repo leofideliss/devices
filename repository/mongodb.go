@@ -3,9 +3,7 @@ package repository
 import (
 	"context"
 	"log"
-	"os"
 
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -14,21 +12,12 @@ import (
 var DB *mongo.Database
 
 func init(){
-    if os.Getenv("TEST_ENV") == "true" {
-        return
-    }
-    
-    err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Erro ao carregar .env")
-	}
-    
-	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI(os.Getenv("DB_HOST")))
+    client, err := mongo.Connect(context.Background(), options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Fatal(err)
 	}
     
-	DB = client.Database(os.Getenv("DATABASE"))
+	DB = client.Database("ms_devices")
 }
 
 type MongoRepository[T any] struct{

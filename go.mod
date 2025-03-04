@@ -3,6 +3,7 @@ module github.com/leofideliss/devices
 go 1.23.5
 
 require (
+	github.com/bxcodec/faker/v3 v3.8.1
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-playground/validator/v10 v10.20.0
 	github.com/joho/godotenv v1.5.1
