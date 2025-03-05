@@ -12,6 +12,7 @@ import (
 	"github.com/leofideliss/devices/pkg/helper"
 	"github.com/leofideliss/devices/service"
     "github.com/go-playground/validator/v10"
+    _ "github.com/leofideliss/devices/docs"
 )
 
 type DeviceHandler struct{
@@ -22,6 +23,16 @@ func NewDeviceHandler(service *service.DeviceService) *DeviceHandler {
     return &DeviceHandler{service: service}
 }
 
+// GetDevice godoc
+// @Summary Consulta um dispositivo pelo Id
+// @Description Retorna as informações do dispositivo
+// @Tags Gerenciar Dispositivos
+// @Accept json
+// @Produce json
+// @Param id path string true "ID do dispositivo"
+// @Param owner query string false "Owner do dispositivo" 
+// @Success 200 {object} helper.Response "Responde com as informações do dispositivo"
+// @Router /{id} [get]
 func (d *DeviceHandler) GetDevice (c *gin.Context){
     id:=c.Param("id")
     owner:=c.Query("owner")
@@ -35,6 +46,15 @@ func (d *DeviceHandler) GetDevice (c *gin.Context){
     return
 }
 
+// RegisterDevice godoc
+// @Summary Registra um dispositivo
+// @Description Retorna o _id do dispostivo cadastrado
+// @Tags Gerenciar Dispositivos
+// @Accept json
+// @Produce json
+// @Param device body domain.RequestDeviceSwagger true "Dados do dispositivo"
+// @Success 200 {object} helper.Response "Responde com o id do dispositivo cadastrado"
+// @Router /register [post]
 func (d *DeviceHandler) RegisterDevice (c *gin.Context){
     var request domain.RequestDevice
 
@@ -73,6 +93,16 @@ func (d *DeviceHandler) RegisterDevice (c *gin.Context){
     return
 }
 
+// DeleteDevice godoc
+// @Summary Deleta um dispositivo
+// @Description Retorna se o dispositivo foi deletado
+// @Tags Gerenciar Dispositivos
+// @Accept json
+// @Produce json
+// @Param id path string true "ID do dispositivo"
+// @Param owner query string false "Owner do dispositivo" 
+// @Success 200 {object} helper.Response "Responde se o dispositivo foi deletado com sucesso"
+// @Router /{id} [delete]
 func (d *DeviceHandler) DeleteDevice (c *gin.Context) {
     id:=c.Param("id")
     owner:=c.Query("owner")
@@ -88,6 +118,17 @@ func (d *DeviceHandler) DeleteDevice (c *gin.Context) {
     return  
 }
 
+// UpdateDevice godoc
+// @Summary Atualiza um dispositivo
+// @Description Retorna o _id do dispostivo atualizado
+// @Tags Gerenciar Dispositivos
+// @Accept json
+// @Produce json
+// @Param id path string true "ID do dispositivo"
+// @Param owner query string false "Owner do dispositivo" 
+// @Param device body domain.RequestDeviceSwagger true "do dispositivo"
+// @Success 200 {object} helper.Response "Responde com o id do dispositivo cadastrado"
+// @Router /{id} [patch]
 func (d *DeviceHandler) UpdateDevice(c *gin.Context){
     id:=c.Param("id")
     owner:=c.Query("owner")
@@ -127,6 +168,17 @@ func (d *DeviceHandler) UpdateDevice(c *gin.Context){
     return
 }
 
+// ListDevice godoc
+// @Summary Lista todos os dispositivos 
+// @Description Retorna uma lista com os dispositivos
+// @Tags Gerenciar Dispositivos
+// @Accept json
+// @Produce json
+// @Param owner query string false "Owner do dispositivo" 
+// @Param limit query string false "Limite de registros consultados" 
+// @Param page query string false "Pagina atual consultada" 
+// @Success 200 {object} helper.Response "Responde com o id do dispositivo cadastrado"
+// @Router /limit [get]
 func (d *DeviceHandler) ListDevice (c *gin.Context) {
     owner := c.Query("owner")
     limit , _ := strconv.Atoi(c.Query("limit"))

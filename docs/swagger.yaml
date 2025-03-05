@@ -1,0 +1,167 @@
+definitions:
+  domain.RequestDeviceSwagger:
+    description: Modelo que representa um dispositivo
+    properties:
+      deviceId:
+        type: string
+      expire_at:
+        example: "2024-12-03T12:15:20Z"
+        type: string
+      metadata:
+        additionalProperties: {}
+        type: object
+      owner:
+        type: string
+      title:
+        type: string
+    type: object
+  helper.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+host: localhost:8888
+info:
+  contact:
+    name: Leonardo Fidelis
+    url: https://github.com/leofideliss
+  description: API para o gerenciamento de dispositivos
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Microsserviço de Dispositivos
+  version: "1.0"
+paths:
+  /{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Retorna se o dispositivo foi deletado
+      parameters:
+      - description: ID do dispositivo
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Owner do dispositivo
+        in: query
+        name: owner
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Responde se o dispositivo foi deletado com sucesso
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Deleta um dispositivo
+      tags:
+      - Gerenciar Dispositivos
+    get:
+      consumes:
+      - application/json
+      description: Retorna as informações do dispositivo
+      parameters:
+      - description: ID do dispositivo
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Owner do dispositivo
+        in: query
+        name: owner
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Responde com as informações do dispositivo
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Consulta um dispositivo pelo Id
+      tags:
+      - Gerenciar Dispositivos
+    patch:
+      consumes:
+      - application/json
+      description: Retorna o _id do dispostivo atualizado
+      parameters:
+      - description: ID do dispositivo
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Owner do dispositivo
+        in: query
+        name: owner
+        type: string
+      - description: do dispositivo
+        in: body
+        name: device
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RequestDeviceSwagger'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Responde com o id do dispositivo cadastrado
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Atualiza um dispositivo
+      tags:
+      - Gerenciar Dispositivos
+  /limit:
+    get:
+      consumes:
+      - application/json
+      description: Retorna uma lista com os dispositivos
+      parameters:
+      - description: Owner do dispositivo
+        in: query
+        name: owner
+        type: string
+      - description: Limite de registros consultados
+        in: query
+        name: limit
+        type: string
+      - description: Pagina atual consultada
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Responde com o id do dispositivo cadastrado
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Lista todos os dispositivos
+      tags:
+      - Gerenciar Dispositivos
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Retorna o _id do dispostivo cadastrado
+      parameters:
+      - description: Dados do dispositivo
+        in: body
+        name: device
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RequestDeviceSwagger'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Responde com o id do dispositivo cadastrado
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Registra um dispositivo
+      tags:
+      - Gerenciar Dispositivos
+swagger: "2.0"
