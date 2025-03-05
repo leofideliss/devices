@@ -43,3 +43,29 @@ func BenchmarkRegisterDevice(b *testing.B){
         }
     }
 }
+
+func BenchmarkGetDevice(b *testing.B) {
+    owner := faker.Name()
+    deviceId := faker.Word()
+    r := routes.SetupRouter()
+    
+    // Primeiro, criamos o dispositivo (simulando a criação).
+    createStatusCode := createDevice(r, owner, deviceId)
+    if createStatusCode != 201 {
+        b.Fatalf("Failed to create device, status code: %d", createStatusCode)
+    }
+
+    // O benchmark é feito dentro do loop que o Go usa para medir o tempo de execução.
+    b.ResetTimer() // Reseta o temporizador para que o tempo de criação do dispositivo não conte no benchmark.
+
+    for i := 0; i < b.N; i++ {
+        req, _ := http.NewRequest("GET", "/" + deviceId + "?owner=" + owner, nil)
+        w := httptest.NewRecorder()
+        r.ServeHTTP(w, req)
+        
+        if w.Code != http.StatusOK {
+            b.Errorf("Expected status OK, got: %d", w.Code)
+        }
+    }
+}
+
