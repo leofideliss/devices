@@ -160,11 +160,15 @@ func (d *DeviceHandler) UpdateDevice(c *gin.Context){
     }
 
     result , err := d.service.UpdateDevice(context.Background(),&device,hash)
-    if err != nil {
-        helper.HandleResponseJson(c,map[string]any{"errCode":"ALR2"},"Fail",http.StatusForbidden,false)
-        return
+    if err == nil {
+    fmt.Println(result.ModifiedCount)
+        if result.ModifiedCount != 0 {
+            helper.HandleResponseJson(c,result.UpsertedID,"Device updated",http.StatusOK,true)
+            return
+        }
     }
-    helper.HandleResponseJson(c,result.UpsertedID,"Device updated",http.StatusOK,true)
+
+    helper.HandleResponseJson(c,map[string]any{"errCode":"ALR2"},"Fail",http.StatusForbidden,false)
     return
 }
 
