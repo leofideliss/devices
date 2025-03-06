@@ -178,7 +178,7 @@ func (d *DeviceHandler) UpdateDevice(c *gin.Context){
 // @Param limit query string false "Limite de registros consultados" 
 // @Param page query string false "Pagina atual consultada" 
 // @Success 200 {object} helper.Response "Responde com o id do dispositivo cadastrado"
-// @Router /limit [get]
+// @Router /list [get]
 func (d *DeviceHandler) ListDevice (c *gin.Context) {
     owner := c.Query("owner")
     limit , _ := strconv.Atoi(c.Query("limit"))
